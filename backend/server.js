@@ -1,20 +1,23 @@
 require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
 
-const app = express();
+const uri = process.env.MONGO_URI; // .env’deki bağlantıyı al
+const client = new MongoClient(uri);
 
-// MongoDB Atlas bağlantısı
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Atlas bağlantısı başarılı!"))
-  .catch((err) => console.error("MongoDB bağlantı hatası:", err));
+async function testMongo() {
+  try {
+    await client.connect();
+    const db = client.db("fiyatDB"); // MongoDB veritabanı adı
+    const collection = db.collection("products"); // collection adı
 
-// Basit test route
-app.get("/", (req, res) => {
-  res.send("Fiyat Avcısı API çalışıyor 🚀");
-});
+    // Örnek veri çekme
+    const items = await collection.find({}).toArray();
+    console.log("Veriler:", items);
 
-// Sunucuyu başlat
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server çalışıyor: ${process.env.PORT || 5000}`);
-});
+    await client.close();
+  } catch (err) {
+    console.error("Hata:", err);
+  }
+}
+
+testMongo();
