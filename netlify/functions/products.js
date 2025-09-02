@@ -1,13 +1,13 @@
 const { MongoClient } = require("mongodb");
 
-const uri = process.env.MONGODB_URI; // Netlify'de env olarak ekleyeceksin
+const uri = process.env.MONGO_URI; // Netlify ortam değişkeninden al
 const client = new MongoClient(uri);
 
 exports.handler = async function(event, context) {
   try {
     await client.connect();
-    const db = client.db("fiyatavcisi");
-    const collection = db.collection("products");
+    const db = client.db("fiyatDB"); // MongoDB’deki database adı
+    const collection = db.collection("products"); // collection adı
 
     const products = await collection.find({}).toArray();
 
