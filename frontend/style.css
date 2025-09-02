@@ -1,18 +1,14 @@
 body {
   font-family: Arial, sans-serif;
+  background: #f8f9fa;
   text-align: center;
-  background: #f4f4f4;
+  padding: 20px;
 }
+
+h1 {
+  color: #2c3e50;
+}
+
 #products {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.product {
-  background: white;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  width: 300px;
-  box-shadow: 0 0 5px gray;
+  margin-top: 20px;
 }
